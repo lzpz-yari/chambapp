@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import { isAuthenticated } from '../services/auth'
 
 const routes = [
   {
@@ -9,13 +11,42 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      guestOnly: true
+    }
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: DashboardView,
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to) => {
+  const loggedIn = isAuthenticated()
+
+  if (to.meta.requiresAuth && !loggedIn) {
+    return {
+      path: '/login'
+    }
+  }
+
+  if (to.meta.guestOnly && loggedIn) {
+    return {
+      path: '/dashboard'
+    }
+  }
+
+  return true
 })
 
 export default router

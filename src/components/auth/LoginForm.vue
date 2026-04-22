@@ -95,9 +95,12 @@
       </div>
 
       <!-- Botón submit -->
-      <button type="submit"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm">
-        Iniciar sesión
+      <button
+        type="submit"
+        :disabled="isLoading"
+        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg transition duration-200 text-sm"
+      >
+        {{ isLoading ? 'Validando...' : 'Iniciar sesión' }}
       </button>
 
     </form>
@@ -116,6 +119,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { loginWithEmail } from '../../services/auth'
 
 const router = useRouter()
 
@@ -127,8 +131,9 @@ const form = reactive({
 
 const showPassword = ref(false)
 const errorMessage = ref('')
+const isLoading = ref(false)
 
-function handleLogin() {
+async function handleLogin() {
   errorMessage.value = ''
 
   if (!form.email || !form.password) {
@@ -147,6 +152,15 @@ function handleLogin() {
     return
   }
 
-  router.push('/dashboard')
+  isLoading.value = true
+
+  try {
+    await loginWithEmail(form.email, form.password, form.remember)
+    router.push('/dashboard')
+  } catch (error) {
+    errorMessage.value = error.message || 'No fue posible iniciar sesión.'
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
