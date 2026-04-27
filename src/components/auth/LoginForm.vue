@@ -119,7 +119,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { loginWithEmail } from '../../services/auth'
+import { loginDemo, getDashboardPath } from '../../services/auth'
 
 const router = useRouter()
 
@@ -131,9 +131,8 @@ const form = reactive({
 
 const showPassword = ref(false)
 const errorMessage = ref('')
-const isLoading = ref(false)
 
-async function handleLogin() {
+function handleLogin() {
   errorMessage.value = ''
 
   if (!form.email || !form.password) {
@@ -141,7 +140,7 @@ async function handleLogin() {
     return
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$|^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailRegex.test(form.email)) {
     errorMessage.value = 'Ingresa un correo electrónico válido.'
     return
@@ -152,15 +151,17 @@ async function handleLogin() {
     return
   }
 
-  isLoading.value = true
+  const result = loginDemo({
+    email: form.email,
+    password: form.password,
+    remember: form.remember
+  })
 
-  try {
-    await loginWithEmail(form.email, form.password, form.remember)
-    router.push('/dashboard')
-  } catch (error) {
-    errorMessage.value = error.message || 'No fue posible iniciar sesión.'
-  } finally {
-    isLoading.value = false
+  if (!result.ok) {
+    errorMessage.value = result.message
+    return
   }
+
+  router.push(getDashboardPath(result.user.role))
 }
 </script>

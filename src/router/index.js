@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import { isAuthenticated } from '../services/auth'
+import LoginView from '../views/Loginview.vue'
+
+import ClienteDashboardView from '../views/ClienteDashboardView.vue'
+import TrabajadorDashboardView from '../views/TrabajadorDashboardView.vue'
+import AdminDashboardView from '../views/AdminDashboardView.vue'
+
+import { getCurrentUser, getDashboardPath } from '../services/auth'
 
 const routes = [
   {
@@ -10,19 +14,39 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
-    component: LoginView,
-    meta: {
-      guestOnly: true
-    }
+    name: 'login',
+    component: LoginView
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardView,
-    meta: {
-      requiresAuth: true
+    name: 'dashboard',
+    beforeEnter: (to, from, next) => {
+      const user = getCurrentUser()
+
+      if (!user) {
+        return next('/login')
+      }
+
+      return next(getDashboardPath(user.role))
     }
+  },
+  {
+    path: '/dashboard/cliente',
+    name: 'dashboard-cliente',
+    component: ClienteDashboardView,
+    meta: { requiresAuth: true, role: 'cliente' }
+  },
+  {
+    path: '/dashboard/trabajador',
+    name: 'dashboard-trabajador',
+    component: TrabajadorDashboardView,
+    meta: { requiresAuth: true, role: 'trabajador' }
+  },
+  {
+    path: '/dashboard/admin',
+    name: 'dashboard-admin',
+    component: AdminDashboardView,
+    meta: { requiresAuth: true, role: 'admin' }
   }
 ]
 
@@ -31,22 +55,22 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to) => {
-  const loggedIn = isAuthenticated()
+router.beforeEach((to, from, next) => {
+  const user = getCurrentUser()
 
-  if (to.meta.requiresAuth && !loggedIn) {
-    return {
-      path: '/login'
-    }
+  if (to.meta.requiresAuth && !user) {
+    return next('/login')
   }
 
-  if (to.meta.guestOnly && loggedIn) {
-    return {
-      path: '/dashboard'
-    }
+  if (to.meta.role && user && user.role !== to.meta.role) {
+    return next(getDashboardPath(user.role))
   }
 
-  return true
+  if (to.path === '/login' && user) {
+    return next(getDashboardPath(user.role))
+  }
+
+  next()
 })
 
 export default router
