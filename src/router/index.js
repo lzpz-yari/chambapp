@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/Loginview.vue'
+
+import LoginView from '../views/loginview.vue'
+import RegisterView from '../views/RegisterView.vue'
 
 import ClienteDashboardView from '../views/ClienteDashboardView.vue'
 import TrabajadorDashboardView from '../views/TrabajadorDashboardView.vue'
@@ -14,12 +16,23 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'login',
-    component: LoginView
+    name: 'Login',
+    component: LoginView,
+    meta: {
+      guestOnly: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+    meta: {
+      guestOnly: true
+    }
   },
   {
     path: '/dashboard',
-    name: 'dashboard',
+    name: 'Dashboard',
     beforeEnter: (to, from, next) => {
       const user = getCurrentUser()
 
@@ -32,21 +45,30 @@ const routes = [
   },
   {
     path: '/dashboard/cliente',
-    name: 'dashboard-cliente',
+    name: 'DashboardCliente',
     component: ClienteDashboardView,
-    meta: { requiresAuth: true, role: 'cliente' }
+    meta: {
+      requiresAuth: true,
+      role: 'cliente'
+    }
   },
   {
     path: '/dashboard/trabajador',
-    name: 'dashboard-trabajador',
+    name: 'DashboardTrabajador',
     component: TrabajadorDashboardView,
-    meta: { requiresAuth: true, role: 'trabajador' }
+    meta: {
+      requiresAuth: true,
+      role: 'trabajador'
+    }
   },
   {
     path: '/dashboard/admin',
-    name: 'dashboard-admin',
+    name: 'DashboardAdmin',
     component: AdminDashboardView,
-    meta: { requiresAuth: true, role: 'admin' }
+    meta: {
+      requiresAuth: true,
+      role: 'admin'
+    }
   }
 ]
 
@@ -66,11 +88,11 @@ router.beforeEach((to, from, next) => {
     return next(getDashboardPath(user.role))
   }
 
-  if (to.path === '/login' && user) {
+  if (to.meta.guestOnly && user) {
     return next(getDashboardPath(user.role))
   }
 
-  next()
+  return next()
 })
 
 export default router
