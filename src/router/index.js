@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
+import LoginView from '../views/loginview.vue'
+import RegisterView from '../views/RegisterView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import { isAuthenticated } from '../services/auth'
 
@@ -22,6 +23,14 @@ const routes = [
     component: DashboardView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+    meta: {
+      guestOnly: true
     }
   }
 ]
