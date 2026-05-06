@@ -4,22 +4,22 @@ const DEMO_USERS = [
   {
     id: 1,
     name: 'Cliente Demo',
-    email: 'emily.johnson1@x.dummyjson.com',
-    password: 'emilyspass1',
+    email: 'usuario1@edu.com',
+    password: 'pass11',
     role: 'cliente'
   },
   {
     id: 2,
     name: 'Trabajador Demo',
-    email: 'emily.johnson2@x.dummyjson.com',
-    password: 'emilyspass2',
+    email: 'usuario2@edu.com',
+    password: 'pass22',
     role: 'trabajador'
   },
   {
     id: 3,
     name: 'Administrador Demo',
-    email: 'emily.johnson3@x.dummyjson.com',
-    password: 'emilyspass3',
+    email: 'usuario3@edu.com',
+    password: 'pass33',
     role: 'admin'
   }
 ]
