@@ -1,155 +1,90 @@
 <template>
-  <DashboardShell :user="user" role-label="Panel del cliente"
-    title="Encuentra trabajadores y administra tus solicitudes"
-    subtitle="Consulta servicios disponibles, revisa tus contrataciones recientes y accede rápidamente a las secciones más importantes."
-    :menu="menu" hero-class="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500" @logout="handleLogout">
-    <!-- Cards -->
-    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-      <StatCard title="Servicios solicitados" value="12" description="Solicitudes realizadas dentro de la plataforma."
-        icon="" iconBg="bg-blue-100 text-blue-700" />
-      <StatCard title="Pagos registrados" value="5" description="Pagos guardados como referencia del cliente." icon=""
-        iconBg="bg-emerald-100 text-emerald-700" />
-      <StatCard title="Trabajadores guardados" value="8" description="Perfiles que el cliente ha revisado o guardado."
-        icon="" iconBg="bg-violet-100 text-violet-700" />
-      <StatCard title="Servicios activos" value="3" description="Solicitudes que actualmente están en proceso."
-        icon="" iconBg="bg-amber-100 text-amber-700" />
-    </section>
+  <DashboardShell
+    :user="user"
+    roleLabel="Panel del Cliente"
+    title="Encuentra al profesional que necesitas"
+    subtitle="Busca trabajadores por oficio o ubicación y contrata el servicio que requieres de forma segura."
+    :menu="menu"
+    heroClass="bg-gradient-to-r from-blue-600 to-cyan-500"
+    @logout="handleLogout"
+  >
 
-    <section class="grid xl:grid-cols-3 gap-6">
-      <!-- Oficios -->
-      <div class="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="flex items-center justify-between mb-5">
-          <div>
-            <h3 class="text-xl font-bold text-slate-800">Servicios y oficios disponibles</h3>
-            <p class="text-sm text-slate-500">Explora las categorías más consultadas.</p>
+    <!-- Tarjetas de estadísticas -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <StatCard
+        title="Trabajadores disponibles"
+        value="24"
+        description="Profesionales activos en tu zona"
+        icon="T"
+        iconBg="bg-blue-100 text-blue-700"
+      />
+      <StatCard
+        title="Contrataciones activas"
+        value="2"
+        description="Servicios en curso actualmente"
+        icon="A"
+        iconBg="bg-amber-100 text-amber-700"
+      />
+      <StatCard
+        title="Historial de servicios"
+        value="7"
+        description="Servicios contratados en total"
+        icon="H"
+        iconBg="bg-green-100 text-green-700"
+      />
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="grid lg:grid-cols-2 gap-6">
+
+      <!-- Trabajadores disponibles -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-lg font-semibold text-slate-800 mb-4">Trabajadores disponibles</h2>
+        <div class="space-y-3">
+          <div
+            v-for="trabajador in trabajadores"
+            :key="trabajador.id"
+            class="border border-slate-200 rounded-xl p-4 flex items-center justify-between hover:bg-slate-50 transition"
+          >
+            <div>
+              <h3 class="font-medium text-slate-800">{{ trabajador.nombre }}</h3>
+              <p class="text-sm text-slate-500">{{ trabajador.oficio }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">{{ trabajador.ubicacion }}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm font-semibold text-amber-500">{{ trabajador.calificacion }} / 5</p>
+              <button class="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                Ver perfil
+              </button>
+            </div>
           </div>
-          <button class="text-sm bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition">
-            Ver más
+        </div>
+      </div>
+
+      <!-- Acciones rápidas -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <h2 class="text-lg font-semibold text-slate-800 mb-4">Acciones rápidas</h2>
+        <div class="grid gap-3">
+          <button
+            v-for="accion in acciones"
+            :key="accion.label"
+            class="border border-slate-200 rounded-xl px-4 py-3 text-left hover:bg-slate-50 transition"
+          >
+            <p class="font-medium text-slate-800">{{ accion.label }}</p>
+            <p class="text-xs text-slate-500 mt-0.5">{{ accion.desc }}</p>
           </button>
         </div>
-
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
-            <h4 class="font-semibold text-slate-800">Electricista</h4>
-            <p class="text-sm text-slate-500 mt-2">Instalaciones, reparaciones, mantenimiento general y revisiones.</p>
-            <span class="inline-block mt-3 text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full">Alta demanda</span>
-          </div>
-
-          <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
-            <h4 class="font-semibold text-slate-800">Plomero</h4>
-            <p class="text-sm text-slate-500 mt-2">Reparación de fugas, tuberías, drenaje y mantenimiento.</p>
-            <span
-              class="inline-block mt-3 text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">Disponible</span>
-          </div>
-
-          <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
-            <h4 class="font-semibold text-slate-800">Carpintero</h4>
-            <p class="text-sm text-slate-500 mt-2">Diseño, ajuste, reparación de muebles y trabajos en madera.</p>
-            <span
-              class="inline-block mt-3 text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">Recomendado</span>
-          </div>
-
-          <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
-            <h4 class="font-semibold text-slate-800">Pintor</h4>
-            <p class="text-sm text-slate-500 mt-2">Pintura interior, exterior, acabados y mantenimiento estético.</p>
-            <span class="inline-block mt-3 text-xs bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Nuevo</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Accesos -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h3 class="text-xl font-bold text-slate-800 mb-5">Accesos rápidos</h3>
-
-        <div class="space-y-3">
-          <RouterLink to="/dashboard/cliente/servicios"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Buscar trabajadores
-          </RouterLink>
-
-          <RouterLink to="/dashboard/cliente/perfiles"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Ver perfiles
-          </RouterLink>
-
-          <RouterLink to="/dashboard/cliente/solicitar"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Solicitar contratación
-          </RouterLink>
-
-          <RouterLink to="/dashboard/cliente/historial"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Ver historial
-          </RouterLink>
-
-          <RouterLink to="/dashboard/cliente/pagos"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Revisar pagos
-          </RouterLink>
-        </div>
-
-        <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
-          <h4 class="font-semibold text-slate-800">Tip</h4>
-          <p class="text-sm text-slate-500 mt-2">
-            Revisa varios perfiles antes de contratar para comparar experiencia, oficio y disponibilidad.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Solicitudes recientes -->
-    <section class="mt-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <h3 class="text-xl font-bold text-slate-800">Solicitudes recientes</h3>
-          <p class="text-sm text-slate-500">Resumen visual de tus últimas contrataciones.</p>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
-          <thead>
-            <tr class="text-left text-slate-500 border-b">
-              <th class="py-3">Servicio</th>
-              <th class="py-3">Trabajador</th>
-              <th class="py-3">Fecha</th>
-              <th class="py-3">Estado</th>
-            </tr>
-          </thead>
-          <tbody class="text-slate-700">
-            <tr class="border-b">
-              <td class="py-4">Reparación eléctrica</td>
-              <td class="py-4">José Martínez</td>
-              <td class="py-4">20/04/2026</td>
-              <td class="py-4"><span
-                  class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pendiente</span></td>
-            </tr>
-            <tr class="border-b">
-              <td class="py-4">Mantenimiento de tuberías</td>
-              <td class="py-4">Luis Pérez</td>
-              <td class="py-4">18/04/2026</td>
-              <td class="py-4"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">En proceso</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="py-4">Pintura interior</td>
-              <td class="py-4">Andrea López</td>
-              <td class="py-4">15/04/2026</td>
-              <td class="py-4"><span
-                  class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs">Completado</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    </div>
   </DashboardShell>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { getCurrentUser, logout } from '../services/auth'
 import DashboardShell from '../components/dashboard/DashboardShell.vue'
 import StatCard from '../components/dashboard/StatCard.vue'
-import { getCurrentUser, logout } from '../services/auth'
 
 const router = useRouter()
 const user = getCurrentUser()
@@ -157,9 +92,22 @@ const user = getCurrentUser()
 const menu = [
   'Inicio',
   'Buscar trabajadores',
-  'Mis solicitudes',
-  'Historial',
-  'Pagos'
+  'Mis contrataciones',
+  'Historial de pagos',
+  'Mi cuenta',
+]
+
+const trabajadores = [
+  { id: 1, nombre: 'Carlos Mendoza', oficio: 'Electricista',   ubicacion: 'Oaxaca de Juárez', calificacion: 4.8 },
+  { id: 2, nombre: 'María López',    oficio: 'Pintora',        ubicacion: 'Etla, Oaxaca',      calificacion: 4.6 },
+  { id: 3, nombre: 'Juan Pérez',     oficio: 'Plomero',        ubicacion: 'Oaxaca de Juárez',  calificacion: 4.5 },
+]
+
+const acciones = [
+  { label: 'Buscar trabajadores',    desc: 'Filtra por oficio o ubicación'         },
+  { label: 'Mis contrataciones',     desc: 'Revisa el estado de tus servicios'     },
+  { label: 'Historial de pagos',     desc: 'Pagos realizados en la plataforma'     },
+  { label: 'Dejar una resena',       desc: 'Califica a los trabajadores contratados' },
 ]
 
 function handleLogout() {

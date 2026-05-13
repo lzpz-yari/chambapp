@@ -1,156 +1,147 @@
 <template>
-  <DashboardShell :user="user" role-label="Panel del trabajador"
-    title="Gestiona tus solicitudes y actividad profesional"
-    subtitle="Consulta solicitudes recientes, revisa tu desempeño y accede a las herramientas visuales más importantes de tu perfil."
-    :menu="menu" hero-class="bg-gradient-to-r from-emerald-700 via-teal-600 to-cyan-500" @logout="handleLogout">
-    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-      <StatCard title="Solicitudes pendientes" value="7" description="Solicitudes recibidas que esperan revisión."
-        icon="" iconBg="bg-yellow-100 text-yellow-700" />
-      <StatCard title="Trabajos completados" value="26" description="Servicios marcados como realizados." icon=""
-        iconBg="bg-emerald-100 text-emerald-700" />
-      <StatCard title="Calificación promedio" value="4.8/5" description="Valoración general del trabajador." icon=""
-        iconBg="bg-violet-100 text-violet-700" />
-      <StatCard title="Servicios activos" value="4" description="Solicitudes que se encuentran en proceso." icon=""
-        iconBg="bg-blue-100 text-blue-700" />
-    </section>
+  <DashboardShell
+    :user="user"
+    roleLabel="Panel del Trabajador"
+    title="Gestiona tus servicios y solicitudes"
+    subtitle="Administra tu perfil profesional, revisa las solicitudes que recibes y consulta tu historial de trabajos."
+    :menu="menu"
+    heroClass="bg-gradient-to-r from-emerald-600 to-teal-500"
+    @logout="handleLogout"
+  >
 
-    <section class="grid xl:grid-cols-3 gap-6">
-      <!-- Solicitudes -->
-      <div class="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="flex items-center justify-between mb-5">
-          <div>
-            <h3 class="text-xl font-bold text-slate-800">Solicitudes recientes</h3>
-            <p class="text-sm text-slate-500">Resumen de nuevos trabajos disponibles.</p>
-          </div>
-          <button class="text-sm bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition">
-            Ver todas
+    <!-- Tarjetas de estadísticas -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+      <StatCard
+        title="Solicitudes recibidas"
+        value="5"
+        description="Solicitudes pendientes de respuesta"
+        icon="S"
+        iconBg="bg-amber-100 text-amber-700"
+      />
+      <StatCard
+        title="Trabajos completados"
+        value="12"
+        description="Total de servicios finalizados"
+        icon="C"
+        iconBg="bg-green-100 text-green-700"
+      />
+      <StatCard
+        title="Calificacion promedio"
+        value="4.7"
+        description="Basado en resenas de clientes"
+        icon="R"
+        iconBg="bg-blue-100 text-blue-700"
+      />
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="grid lg:grid-cols-2 gap-6">
+
+      <!-- Mi perfil profesional -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold text-slate-800">Mi perfil profesional</h2>
+          <button class="text-sm text-blue-600 hover:text-blue-700 font-medium border border-blue-200 rounded-lg px-3 py-1.5 hover:bg-blue-50 transition">
+            Editar
           </button>
         </div>
-
-        <div class="space-y-4">
-          <div
-            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h4 class="font-semibold text-slate-800">Reparación eléctrica</h4>
-              <p class="text-sm text-slate-500 mt-1">Cliente: María López · Zona: Oaxaca Centro</p>
-            </div>
-            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs w-fit">Pendiente</span>
-          </div>
-
-          <div
-            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h4 class="font-semibold text-slate-800">Instalación de lámpara</h4>
-              <p class="text-sm text-slate-500 mt-1">Cliente: Luis Hernández · Zona: Reforma</p>
-            </div>
-            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs w-fit">En proceso</span>
-          </div>
-
-          <div
-            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h4 class="font-semibold text-slate-800">Mantenimiento general</h4>
-              <p class="text-sm text-slate-500 mt-1">Cliente: Ana Torres · Zona: Xoxocotlán</p>
-            </div>
-            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs w-fit">Aceptada</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Accesos -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h3 class="text-xl font-bold text-slate-800 mb-5">Accesos rápidos</h3>
-
         <div class="space-y-3">
-          <RouterLink to="/dashboard/trabajador/solicitudes"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Ver solicitudes
-          </RouterLink>
-
-          <RouterLink to="/dashboard/trabajador/historial"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Consultar historial
-          </RouterLink>
-
-          <RouterLink to="/dashboard/trabajador/perfil"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Editar perfil profesional
-          </RouterLink>
-
-          <RouterLink to="/dashboard/trabajador/estado"
-            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
-            Ver estado de trabajos
-          </RouterLink>
-        </div>
-
-        <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
-          <h4 class="font-semibold text-slate-800">Actividad destacada</h4>
-          <p class="text-sm text-slate-500 mt-2">
-            Has aumentado tu calificación y tu número de servicios completados esta semana.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-6 grid lg:grid-cols-2 gap-6">
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h3 class="text-xl font-bold text-slate-800 mb-4">Resumen profesional</h3>
-        <div class="space-y-4 text-sm text-slate-600">
-          <div class="flex justify-between border-b pb-3">
-            <span>Oficio principal</span>
-            <span class="font-medium text-slate-800">Electricista</span>
+          <div class="border border-slate-200 rounded-xl p-4">
+            <p class="text-xs text-slate-500 mb-1">Oficio</p>
+            <p class="font-medium text-slate-800">{{ perfil.oficio }}</p>
           </div>
-          <div class="flex justify-between border-b pb-3">
-            <span>Experiencia</span>
-            <span class="font-medium text-slate-800">5 años</span>
+          <div class="border border-slate-200 rounded-xl p-4">
+            <p class="text-xs text-slate-500 mb-1">Ubicacion</p>
+            <p class="font-medium text-slate-800">{{ perfil.ubicacion }}</p>
           </div>
-          <div class="flex justify-between border-b pb-3">
-            <span>Zona de trabajo</span>
-            <span class="font-medium text-slate-800">Oaxaca de Juárez</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Disponibilidad</span>
-            <span class="font-medium text-emerald-700">Disponible</span>
+          <div class="border border-slate-200 rounded-xl p-4">
+            <p class="text-xs text-slate-500 mb-1">Descripcion del servicio</p>
+            <p class="text-sm text-slate-700 leading-relaxed">{{ perfil.descripcion }}</p>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <h3 class="text-xl font-bold text-slate-800 mb-4">Últimos trabajos</h3>
-        <div class="space-y-4">
-          <div class="border border-slate-200 rounded-2xl p-4">
-            <h4 class="font-semibold text-slate-800">Revisión eléctrica de vivienda</h4>
-            <p class="text-sm text-slate-500 mt-1">Completado hace 2 días</p>
-          </div>
-          <div class="border border-slate-200 rounded-2xl p-4">
-            <h4 class="font-semibold text-slate-800">Cambio de instalación básica</h4>
-            <p class="text-sm text-slate-500 mt-1">Completado hace 4 días</p>
-          </div>
-          <div class="border border-slate-200 rounded-2xl p-4">
-            <h4 class="font-semibold text-slate-800">Mantenimiento preventivo</h4>
-            <p class="text-sm text-slate-500 mt-1">Completado hace 1 semana</p>
+      <!-- Panel derecho -->
+      <div class="space-y-6">
+
+        <!-- Solicitudes recientes -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <h2 class="text-lg font-semibold text-slate-800 mb-4">Solicitudes recientes</h2>
+          <div class="space-y-3">
+            <div
+              v-for="solicitud in solicitudes"
+              :key="solicitud.id"
+              class="border border-slate-200 rounded-xl p-4 flex items-center justify-between"
+            >
+              <div>
+                <p class="font-medium text-slate-800">{{ solicitud.cliente }}</p>
+                <p class="text-xs text-slate-500 mt-0.5">{{ solicitud.servicio }}</p>
+              </div>
+              <span
+                class="text-xs font-semibold px-3 py-1 rounded-full"
+                :class="solicitud.estado === 'Pendiente'
+                  ? 'bg-amber-100 text-amber-700'
+                  : 'bg-green-100 text-green-700'"
+              >
+                {{ solicitud.estado }}
+              </span>
+            </div>
           </div>
         </div>
+
+        <!-- Acciones rápidas -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <h2 class="text-lg font-semibold text-slate-800 mb-4">Acciones rápidas</h2>
+          <div class="grid gap-3">
+            <button
+              v-for="accion in acciones"
+              :key="accion.label"
+              class="border border-slate-200 rounded-xl px-4 py-3 text-left hover:bg-slate-50 transition"
+            >
+              <p class="font-medium text-slate-800">{{ accion.label }}</p>
+              <p class="text-xs text-slate-500 mt-0.5">{{ accion.desc }}</p>
+            </button>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </div>
+
   </DashboardShell>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { getCurrentUser, logout } from '../services/auth'
 import DashboardShell from '../components/dashboard/DashboardShell.vue'
 import StatCard from '../components/dashboard/StatCard.vue'
-import { getCurrentUser, logout } from '../services/auth'
 
 const router = useRouter()
 const user = getCurrentUser()
 
 const menu = [
   'Inicio',
-  'Solicitudes',
-  'Perfil profesional',
-  'Historial',
-  'Estado de trabajos'
+  'Mis servicios',
+  'Solicitudes recibidas',
+  'Historial de trabajos',
+  'Mi cuenta',
+]
+
+const perfil = {
+  oficio:      'Electricista',
+  ubicacion:   'Oaxaca de Juárez, Oaxaca',
+  descripcion: 'Instalaciones eléctricas residenciales y comerciales con mas de 5 años de experiencia. Trabajo garantizado y a precios accesibles.',
+}
+
+const solicitudes = [
+  { id: 1, cliente: 'Ana García',     servicio: 'Instalacion de contactos',  estado: 'Pendiente' },
+  { id: 2, cliente: 'Roberto Díaz',   servicio: 'Revision de tablero',       estado: 'Aceptado'  },
+  { id: 3, cliente: 'Sofia Morales',  servicio: 'Instalacion de luminarias', estado: 'Pendiente' },
+]
+
+const acciones = [
+  { label: 'Mis servicios publicados', desc: 'Gestiona los servicios que ofreces'    },
+  { label: 'Historial de trabajos',    desc: 'Revisa tus contrataciones pasadas'     },
 ]
 
 function handleLogout() {
