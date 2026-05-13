@@ -1,42 +1,17 @@
 <template>
-  <DashboardShell
-    :user="user"
-    role-label="Panel del administrador"
+  <DashboardShell :user="user" role-label="Panel del administrador"
     title="Supervisa la actividad general de la plataforma"
     subtitle="Visualiza usuarios, contrataciones y el estado general del sistema en un panel más claro y agradable."
-    :menu="menu"
-    hero-class="bg-gradient-to-r from-slate-800 via-slate-700 to-indigo-700"
-    @logout="handleLogout"
-  >
+    :menu="menu" hero-class="bg-gradient-to-r from-slate-800 via-slate-700 to-indigo-700" @logout="handleLogout">
     <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-      <StatCard
-        title="Usuarios registrados"
-        value="120"
-        description="Total de cuentas creadas en la plataforma."
-        icon="👥"
-        iconBg="bg-blue-100 text-blue-700"
-      />
-      <StatCard
-        title="Trabajadores activos"
-        value="48"
-        description="Usuarios trabajadores con actividad reciente."
-        icon="🧑‍🔧"
-        iconBg="bg-emerald-100 text-emerald-700"
-      />
-      <StatCard
-        title="Contrataciones"
-        value="67"
-        description="Solicitudes registradas dentro del sistema."
-        icon="📋"
-        iconBg="bg-violet-100 text-violet-700"
-      />
-      <StatCard
-        title="Pendientes de revisión"
-        value="9"
-        description="Registros o actividades por revisar."
-        icon="⚠"
-        iconBg="bg-amber-100 text-amber-700"
-      />
+      <StatCard title="Usuarios registrados" value="120" description="Total de cuentas creadas en la plataforma."
+        icon="" iconBg="bg-blue-100 text-blue-700" />
+      <StatCard title="Trabajadores activos" value="48" description="Usuarios trabajadores con actividad reciente."
+        icon="" iconBg="bg-emerald-100 text-emerald-700" />
+      <StatCard title="Contrataciones" value="67" description="Solicitudes registradas dentro del sistema." icon=""
+        iconBg="bg-violet-100 text-violet-700" />
+      <StatCard title="Pendientes de revisión" value="9" description="Registros o actividades por revisar." icon=""
+        iconBg="bg-amber-100 text-amber-700" />
     </section>
 
     <section class="grid xl:grid-cols-3 gap-6">
@@ -78,18 +53,25 @@
         <h3 class="text-xl font-bold text-slate-800 mb-5">Accesos rápidos</h3>
 
         <div class="space-y-3">
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          <RouterLink to="/dashboard/admin/usuarios"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Administrar usuarios
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/admin/registros"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Revisar registros
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/admin/contrataciones"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Supervisar contrataciones
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
-            Mantenimiento general
-          </button>
+          </RouterLink>
+
+          <RouterLink to="/dashboard/admin/sistema"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
+            Mantenimiento del sistema
+          </RouterLink>
         </div>
 
         <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">

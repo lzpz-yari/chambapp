@@ -1,42 +1,17 @@
 <template>
-  <DashboardShell
-    :user="user"
-    role-label="Panel del trabajador"
+  <DashboardShell :user="user" role-label="Panel del trabajador"
     title="Gestiona tus solicitudes y actividad profesional"
     subtitle="Consulta solicitudes recientes, revisa tu desempeño y accede a las herramientas visuales más importantes de tu perfil."
-    :menu="menu"
-    hero-class="bg-gradient-to-r from-emerald-700 via-teal-600 to-cyan-500"
-    @logout="handleLogout"
-  >
+    :menu="menu" hero-class="bg-gradient-to-r from-emerald-700 via-teal-600 to-cyan-500" @logout="handleLogout">
     <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-      <StatCard
-        title="Solicitudes pendientes"
-        value="7"
-        description="Solicitudes recibidas que esperan revisión."
-        icon="📥"
-        iconBg="bg-yellow-100 text-yellow-700"
-      />
-      <StatCard
-        title="Trabajos completados"
-        value="26"
-        description="Servicios marcados como realizados."
-        icon="✅"
-        iconBg="bg-emerald-100 text-emerald-700"
-      />
-      <StatCard
-        title="Calificación promedio"
-        value="4.8/5"
-        description="Valoración general del trabajador."
-        icon="⭐"
-        iconBg="bg-violet-100 text-violet-700"
-      />
-      <StatCard
-        title="Servicios activos"
-        value="4"
-        description="Solicitudes que se encuentran en proceso."
-        icon="🧰"
-        iconBg="bg-blue-100 text-blue-700"
-      />
+      <StatCard title="Solicitudes pendientes" value="7" description="Solicitudes recibidas que esperan revisión."
+        icon="" iconBg="bg-yellow-100 text-yellow-700" />
+      <StatCard title="Trabajos completados" value="26" description="Servicios marcados como realizados." icon=""
+        iconBg="bg-emerald-100 text-emerald-700" />
+      <StatCard title="Calificación promedio" value="4.8/5" description="Valoración general del trabajador." icon=""
+        iconBg="bg-violet-100 text-violet-700" />
+      <StatCard title="Servicios activos" value="4" description="Solicitudes que se encuentran en proceso." icon=""
+        iconBg="bg-blue-100 text-blue-700" />
     </section>
 
     <section class="grid xl:grid-cols-3 gap-6">
@@ -53,7 +28,8 @@
         </div>
 
         <div class="space-y-4">
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div
+            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h4 class="font-semibold text-slate-800">Reparación eléctrica</h4>
               <p class="text-sm text-slate-500 mt-1">Cliente: María López · Zona: Oaxaca Centro</p>
@@ -61,7 +37,8 @@
             <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs w-fit">Pendiente</span>
           </div>
 
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div
+            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h4 class="font-semibold text-slate-800">Instalación de lámpara</h4>
               <p class="text-sm text-slate-500 mt-1">Cliente: Luis Hernández · Zona: Reforma</p>
@@ -69,7 +46,8 @@
             <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs w-fit">En proceso</span>
           </div>
 
-          <div class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div
+            class="border border-slate-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h4 class="font-semibold text-slate-800">Mantenimiento general</h4>
               <p class="text-sm text-slate-500 mt-1">Cliente: Ana Torres · Zona: Xoxocotlán</p>
@@ -84,18 +62,25 @@
         <h3 class="text-xl font-bold text-slate-800 mb-5">Accesos rápidos</h3>
 
         <div class="space-y-3">
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          <RouterLink to="/dashboard/trabajador/solicitudes"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Ver solicitudes
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/trabajador/historial"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Consultar historial
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/trabajador/perfil"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Editar perfil profesional
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/trabajador/estado"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Ver estado de trabajos
-          </button>
+          </RouterLink>
         </div>
 
         <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">

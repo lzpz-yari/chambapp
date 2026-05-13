@@ -1,43 +1,18 @@
 <template>
-  <DashboardShell
-    :user="user"
-    role-label="Panel del cliente"
+  <DashboardShell :user="user" role-label="Panel del cliente"
     title="Encuentra trabajadores y administra tus solicitudes"
     subtitle="Consulta servicios disponibles, revisa tus contrataciones recientes y accede rápidamente a las secciones más importantes."
-    :menu="menu"
-    hero-class="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500"
-    @logout="handleLogout"
-  >
+    :menu="menu" hero-class="bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-500" @logout="handleLogout">
     <!-- Cards -->
     <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-      <StatCard
-        title="Servicios solicitados"
-        value="12"
-        description="Solicitudes realizadas dentro de la plataforma."
-        icon="🛠"
-        iconBg="bg-blue-100 text-blue-700"
-      />
-      <StatCard
-        title="Pagos registrados"
-        value="5"
-        description="Pagos guardados como referencia del cliente."
-        icon="💳"
-        iconBg="bg-emerald-100 text-emerald-700"
-      />
-      <StatCard
-        title="Trabajadores guardados"
-        value="8"
-        description="Perfiles que el cliente ha revisado o guardado."
-        icon="👤"
-        iconBg="bg-violet-100 text-violet-700"
-      />
-      <StatCard
-        title="Servicios activos"
-        value="3"
-        description="Solicitudes que actualmente están en proceso."
-        icon="📌"
-        iconBg="bg-amber-100 text-amber-700"
-      />
+      <StatCard title="Servicios solicitados" value="12" description="Solicitudes realizadas dentro de la plataforma."
+        icon="" iconBg="bg-blue-100 text-blue-700" />
+      <StatCard title="Pagos registrados" value="5" description="Pagos guardados como referencia del cliente." icon=""
+        iconBg="bg-emerald-100 text-emerald-700" />
+      <StatCard title="Trabajadores guardados" value="8" description="Perfiles que el cliente ha revisado o guardado."
+        icon="" iconBg="bg-violet-100 text-violet-700" />
+      <StatCard title="Servicios activos" value="3" description="Solicitudes que actualmente están en proceso."
+        icon="" iconBg="bg-amber-100 text-amber-700" />
     </section>
 
     <section class="grid xl:grid-cols-3 gap-6">
@@ -63,13 +38,15 @@
           <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
             <h4 class="font-semibold text-slate-800">Plomero</h4>
             <p class="text-sm text-slate-500 mt-2">Reparación de fugas, tuberías, drenaje y mantenimiento.</p>
-            <span class="inline-block mt-3 text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">Disponible</span>
+            <span
+              class="inline-block mt-3 text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">Disponible</span>
           </div>
 
           <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
             <h4 class="font-semibold text-slate-800">Carpintero</h4>
             <p class="text-sm text-slate-500 mt-2">Diseño, ajuste, reparación de muebles y trabajos en madera.</p>
-            <span class="inline-block mt-3 text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">Recomendado</span>
+            <span
+              class="inline-block mt-3 text-xs bg-violet-100 text-violet-700 px-3 py-1 rounded-full">Recomendado</span>
           </div>
 
           <div class="border border-slate-200 rounded-2xl p-4 hover:border-blue-300 hover:bg-slate-50 transition">
@@ -85,18 +62,30 @@
         <h3 class="text-xl font-bold text-slate-800 mb-5">Accesos rápidos</h3>
 
         <div class="space-y-3">
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          <RouterLink to="/dashboard/cliente/servicios"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Buscar trabajadores
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
-            Ver perfiles profesionales
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
+          </RouterLink>
+
+          <RouterLink to="/dashboard/cliente/perfiles"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
+            Ver perfiles
+          </RouterLink>
+
+          <RouterLink to="/dashboard/cliente/solicitar"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
             Solicitar contratación
-          </button>
-          <button class="w-full text-left border border-slate-200 rounded-2xl px-4 py-4 hover:bg-slate-50 transition">
-            Revisar historial y pagos
-          </button>
+          </RouterLink>
+
+          <RouterLink to="/dashboard/cliente/historial"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
+            Ver historial
+          </RouterLink>
+
+          <RouterLink to="/dashboard/cliente/pagos"
+            class="border rounded-xl px-4 py-3 text-left hover:bg-gray-50 block">
+            Revisar pagos
+          </RouterLink>
         </div>
 
         <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4">
@@ -132,19 +121,22 @@
               <td class="py-4">Reparación eléctrica</td>
               <td class="py-4">José Martínez</td>
               <td class="py-4">20/04/2026</td>
-              <td class="py-4"><span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pendiente</span></td>
+              <td class="py-4"><span
+                  class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">Pendiente</span></td>
             </tr>
             <tr class="border-b">
               <td class="py-4">Mantenimiento de tuberías</td>
               <td class="py-4">Luis Pérez</td>
               <td class="py-4">18/04/2026</td>
-              <td class="py-4"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">En proceso</span></td>
+              <td class="py-4"><span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">En proceso</span>
+              </td>
             </tr>
             <tr>
               <td class="py-4">Pintura interior</td>
               <td class="py-4">Andrea López</td>
               <td class="py-4">15/04/2026</td>
-              <td class="py-4"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs">Completado</span></td>
+              <td class="py-4"><span
+                  class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs">Completado</span></td>
             </tr>
           </tbody>
         </table>

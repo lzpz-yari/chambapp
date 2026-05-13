@@ -7,6 +7,22 @@ import ClienteDashboardView from '../views/ClienteDashboardView.vue'
 import TrabajadorDashboardView from '../views/TrabajadorDashboardView.vue'
 import AdminDashboardView from '../views/AdminDashboardView.vue'
 
+import ClienteServiciosView from '../views/cliente/ClienteServiciosView.vue'
+import ClientePerfilesView from '../views/cliente/ClientePerfilesView.vue'
+import ClienteSolicitarView from '../views/cliente/ClienteSolicitarView.vue'
+import ClienteHistorialView from '../views/cliente/ClienteHistorialView.vue'
+import ClientePagosView from '../views/cliente/ClientePagosView.vue'
+
+import TrabajadorSolicitudesView from '../views/trabajador/TrabajadorSolicitudesView.vue'
+import TrabajadorPerfilView from '../views/trabajador/TrabajadorPerfilView.vue'
+import TrabajadorHistorialView from '../views/trabajador/TrabajadorHistorialView.vue'
+import TrabajadorEstadoView from '../views/trabajador/TrabajadorEstadoView.vue'
+
+import AdminUsuariosView from '../views/admin/AdminUsuariosView.vue'
+import AdminRegistrosView from '../views/admin/AdminRegistrosView.vue'
+import AdminContratacionesView from '../views/admin/AdminContratacionesView.vue'
+import AdminSistemaView from '../views/admin/AdminSistemaView.vue'
+
 import { getCurrentUser, getDashboardPath } from '../services/auth'
 
 const routes = [
@@ -52,6 +68,52 @@ const routes = [
       role: 'cliente'
     }
   },
+
+{
+  path: '/dashboard/cliente/servicios',
+  name: 'ClienteServicios',
+  component: ClienteServiciosView,
+  meta: {
+    requiresAuth: true,
+    role: 'cliente'
+  }
+},
+{
+  path: '/dashboard/cliente/perfiles',
+  name: 'ClientePerfiles',
+  component: ClientePerfilesView,
+  meta: {
+    requiresAuth: true,
+    role: 'cliente'
+  }
+},
+{
+  path: '/dashboard/cliente/solicitar',
+  name: 'ClienteSolicitar',
+  component: ClienteSolicitarView,
+  meta: {
+    requiresAuth: true,
+    role: 'cliente'
+  }
+},
+{
+  path: '/dashboard/cliente/historial',
+  name: 'ClienteHistorial',
+  component: ClienteHistorialView,
+  meta: {
+    requiresAuth: true,
+    role: 'cliente'
+  }
+},
+{
+  path: '/dashboard/cliente/pagos',
+  name: 'ClientePagos',
+  component: ClientePagosView,
+  meta: {
+    requiresAuth: true,
+    role: 'cliente'
+  }
+},
   {
     path: '/dashboard/trabajador',
     name: 'DashboardTrabajador',
@@ -62,6 +124,42 @@ const routes = [
     }
   },
   {
+  path: '/dashboard/trabajador/solicitudes',
+  name: 'TrabajadorSolicitudes',
+  component: TrabajadorSolicitudesView,
+  meta: {
+    requiresAuth: true,
+    role: 'trabajador'
+  }
+},
+{
+  path: '/dashboard/trabajador/perfil',
+  name: 'TrabajadorPerfil',
+  component: TrabajadorPerfilView,
+  meta: {
+    requiresAuth: true,
+    role: 'trabajador'
+  }
+},
+{
+  path: '/dashboard/trabajador/historial',
+  name: 'TrabajadorHistorial',
+  component: TrabajadorHistorialView,
+  meta: {
+    requiresAuth: true,
+    role: 'trabajador'
+  }
+},
+{
+  path: '/dashboard/trabajador/estado',
+  name: 'TrabajadorEstado',
+  component: TrabajadorEstadoView,
+  meta: {
+    requiresAuth: true,
+    role: 'trabajador'
+  }
+},
+  {
     path: '/dashboard/admin',
     name: 'DashboardAdmin',
     component: AdminDashboardView,
@@ -69,7 +167,43 @@ const routes = [
       requiresAuth: true,
       role: 'admin'
     }
+  },
+  {
+  path: '/dashboard/admin/usuarios',
+  name: 'AdminUsuarios',
+  component: AdminUsuariosView,
+  meta: {
+    requiresAuth: true,
+    role: 'admin'
   }
+},
+{
+  path: '/dashboard/admin/registros',
+  name: 'AdminRegistros',
+  component: AdminRegistrosView,
+  meta: {
+    requiresAuth: true,
+    role: 'admin'
+  }
+},
+{
+  path: '/dashboard/admin/contrataciones',
+  name: 'AdminContrataciones',
+  component: AdminContratacionesView,
+  meta: {
+    requiresAuth: true,
+    role: 'admin'
+  }
+},
+{
+  path: '/dashboard/admin/sistema',
+  name: 'AdminSistema',
+  component: AdminSistemaView,
+  meta: {
+    requiresAuth: true,
+    role: 'admin'
+  }
+}
 ]
 
 const router = createRouter({
